@@ -339,7 +339,7 @@ void SeekActionHandler::processState(Qmmp::State state)
 {
     switch (state) {
     case Qmmp::Playing:
-        m_maxValue = m_core->totalTime();
+        m_maxValue = m_core->duration();
         break;
     case Qmmp::Stopped:
         emit valueChanged(0);

@@ -11,6 +11,7 @@
 #define MODERNFACTORY_H
 
 #include <QObject>
+#include <QString>
 #include <qmmpui/uifactory.h>
 
 class QTranslator;
@@ -21,10 +22,11 @@ class ModernFactory : public QObject, public UiFactory
     Q_PLUGIN_METADATA(IID "org.qmmp.qmmpui.UiFactoryinterface.1.0")
     Q_INTERFACES(UiFactory)
 public:
-    const UiProperties properties() const;
+    UiProperties properties() const;
     QObject *create();
     void showAbout(QWidget *parent);
     QTranslator *createTranslator(QObject *parent);
+	QString translation(){return QString("");}
 };
 
 #endif // MODERNFACTORY_H

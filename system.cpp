@@ -124,7 +124,7 @@ QString System::playItemMetaDataString(const QString &type) const
         return QString();
         break;
     case LENGTH:
-        return QString::number(m_core->totalTime()); // Should this be in milliseconds?
+        return QString::number(m_core->duration()); // Should this be in milliseconds?
         break;
     case BITRATE:
         return QString::number(m_core->bitrate());
@@ -138,7 +138,7 @@ QString System::playItemMetaDataString(const QString &type) const
 
 int System::playItemLength() const
 {
-    return m_core->totalTime();
+    return m_core->duration();
 }
 
 int System::messageBox(const QString &message, const QString &title, int flags, const QString &configEntry)
@@ -310,7 +310,7 @@ float System::stringToFloat(const QString &number)
 
 QString System::integerToLongTime(int value)
 {
-    QString time = MetaDataFormatter::formatLength(value / 1000, false);
+    QString time = MetaDataFormatter::formatDuration(value / 1000, false,false);
     if (time.length() < 6)
         return QString("00:%1").arg(time);
     return time;
@@ -318,7 +318,7 @@ QString System::integerToLongTime(int value)
 
 QString System::integerToTime(int value)
 {
-    QString time = MetaDataFormatter::formatLength(value / 1000, false);
+    QString time = MetaDataFormatter::formatDuration(value / 1000, false,false);
     if (time.length() > 5)
         time.remove(0, 3);
     return time;

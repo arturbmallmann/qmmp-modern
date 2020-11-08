@@ -15,6 +15,7 @@
 
 #include <QMouseEvent>
 #include <QPainter>
+#include <QMutex>
 
 #include <cmath>
 
@@ -533,7 +534,7 @@ void Visualizer::visualize()
     setPixmap(m_pixmap, false, false);
 }
 
-VisualDataStream::VisualDataStream(QWidget *parent) : Visual (parent)
+VisualDataStream::VisualDataStream(QWidget *parent,Qt::WindowFlags f) : Visual (parent)
 {
     m_buffer = new float[VISUAL_BUFFER_SIZE];
     m_timer = new QTimer(this);
@@ -571,11 +572,12 @@ float *VisualDataStream::data()
     return m_buffer;
 }
 
+QMutex mutex;
 void VisualDataStream::timeout()
 {
-    mutex()->lock();
+    mutex.lock();
     if (m_buffer_at < VISUAL_NODE_SIZE) {
-        mutex()->unlock();
+        mutex.unlock();
         return;
     }
 
@@ -584,7 +586,7 @@ void VisualDataStream::timeout()
     m_buffer_at -= VISUAL_NODE_SIZE;
     memmove(m_buffer, m_buffer + VISUAL_NODE_SIZE, m_buffer_at * sizeof(float));
 
-    mutex()->unlock();
+    mutex.unlock();
 }
 
 Analyzer::Analyzer()

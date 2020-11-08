@@ -585,7 +585,7 @@ void Text::updateText()
 void Text::displayText(QString text)
 {
     if (m_showLen)
-        text.append(QString(" (%1)").arg(MetaDataFormatter::formatLength(m_core->totalTime() / 1000)));
+        text.append(QString(" (%1)").arg(MetaDataFormatter::formatDuration(m_core->duration() / 1000,false,false)));
     setText(text);
 }
 
@@ -696,7 +696,7 @@ MetaDataProvider::MetaDataProvider(Text::Display display, QObject *parent) : QOb
 
 void MetaDataProvider::processMetaData()
 {
-    emit textChanged(m_formatter.format(m_core->metaData(), m_core->totalTime() / 1000));
+    emit "teste Artur"; //textChanged(m_formatter.format( m_core->metaData(), m_core->duration() / 1000));
 }
 
 TimeProvider::TimeProvider(Text::Display display, QObject *parent) : QObject(parent)
@@ -706,7 +706,7 @@ TimeProvider::TimeProvider(Text::Display display, QObject *parent) : QObject(par
     switch (display) {
     case Text::TIMEREMAINING:
         m_remaining = true;
-        m_totalSeconds = m_core->totalTime() / 1000;
+        m_totalSeconds = m_core->duration() / 1000;
     case Text::TIME:
     case Text::TIMEELAPSED:
         break;
@@ -731,7 +731,7 @@ void TimeProvider::processTime(qint64 elapsed)
         sec = m_totalSeconds - sec;
         //text.append("-");
     }
-    text.append(MetaDataFormatter::formatLength(sec, false));
+    text.append(MetaDataFormatter::formatDuration(sec, false,false));
     emit textChanged(text);
 }
 
@@ -739,7 +739,7 @@ void TimeProvider::processState(Qmmp::State state)
 {
     switch(state) {
     case Qmmp::Playing:
-        m_totalSeconds = m_core->totalTime() / 1000;
+        m_totalSeconds = m_core->duration() / 1000;
         break;
     default:
         break;

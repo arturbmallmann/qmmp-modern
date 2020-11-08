@@ -13,7 +13,7 @@
 #include "mainwindow.h"
 #include "modernfactory.h"
 
-const UiProperties ModernFactory::properties() const
+UiProperties ModernFactory::properties() const
 {
     UiProperties props;
     props.hasAbout = true;

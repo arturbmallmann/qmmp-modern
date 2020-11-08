@@ -71,13 +71,14 @@ class VisualDataStream : public Visual
 {
     Q_OBJECT
 public:
-    VisualDataStream(QWidget *parent = 0);
+    VisualDataStream(QWidget *parent = 0,Qt::WindowFlags f = Qt::WindowFlags());
     ~VisualDataStream() {}
 
     void add(float *data, size_t samples, int chan);
     void clear();
     float *data();
-
+	virtual void start(){}
+	virtual void stop(){}
 signals:
     void dataReady();
 
